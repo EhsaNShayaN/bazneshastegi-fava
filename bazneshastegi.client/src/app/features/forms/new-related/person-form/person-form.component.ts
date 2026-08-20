@@ -93,41 +93,7 @@ export class PersonFormComponent extends BaseComponent implements OnInit, OnDest
               if (this.tempPersonID) {
                 this.restApiService.getTempPerson().subscribe((res: TempPersonsResponse) => {
                   this.tempPerson = res.data.find(s => s.tempPersonID === this.tempPersonID);
-                  const personBirthDate = this.tempPerson?.personBirthDate
-                    ? jMoment(this.tempPerson.personBirthDate)
-                    : null;
-                  this.form = this.fb.group({
-                    relationshipID: [this.tempPerson?.relationshipID, Validators.required],
-                    personFirstName: [this.tempPerson?.personFirstName, Validators.required],
-                    personLastName: [this.tempPerson?.personLastName, Validators.required],
-                    personNationalCode: [this.tempPerson?.personNationalCode, Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(10)])],
-                    personFatherName: [this.tempPerson?.personFatherName, Validators.required],
-                    personCertificateNo: [this.tempPerson?.personCertificateNo, Validators.required],
-                    personBirthDate: [personBirthDate, Validators.required],
-
-                    personBirthPlaceStateID: [this.tempPerson?.personBirthPlaceStateID],
-                    personBirthPlaceCityID: [null],
-
-                    genderID: [this.tempPerson?.genderID, Validators.required],
-                    maritalStatusID: [this.tempPerson?.maritalStatusID, Validators.required],
-
-                    educationTypeID: [this.tempPerson?.educationTypeID],
-                    educationBranchID: [null],
-                    universityID: [this.tempPerson?.universityID],
-
-                    personPhone: [this.tempPerson?.personPhone],
-                    personCellPhone: [this.tempPerson?.personCellPhone, Validators.required],
-
-                    personStateID: [this.tempPerson?.personStateID, Validators.required],
-                    personCityID: [null, Validators.required],
-                    personRegion: [this.tempPerson?.personRegion, Validators.required],
-                    personArea: [this.tempPerson?.personArea, Validators.required],
-
-                    personPostalCode: [this.tempPerson?.personPostalCode, Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(10)])],
-                    personAddress: [this.tempPerson?.personAddress, Validators.required],
-
-                    personDescription: [this.tempPerson?.personDescription],
-                  });
+                  this.createForm();
                   if (this.tempPerson?.personBirthPlaceStateID && this.tempPerson?.personBirthPlaceCityID) {
                     this.onStateChanged(this.tempPerson?.personBirthPlaceStateID, this.tempPerson?.personBirthPlaceCityID);
                   }
@@ -135,6 +101,8 @@ export class PersonFormComponent extends BaseComponent implements OnInit, OnDest
                     this.onPersonStateChanged(this.tempPerson?.personStateID, this.tempPerson?.personCityID);
                   }
                 });
+              } else {
+                this.createForm();
               }
             });
           });
@@ -260,5 +228,43 @@ export class PersonFormComponent extends BaseComponent implements OnInit, OnDest
   ngOnDestroy() {
     this.sub.unsubscribe();
     this.sub3.unsubscribe();
+  }
+
+  createForm() {
+    const personBirthDate = this.tempPerson?.personBirthDate
+      ? jMoment(this.tempPerson.personBirthDate)
+      : null;
+    this.form = this.fb.group({
+      relationshipID: [this.tempPerson?.relationshipID, Validators.required],
+      personFirstName: [this.tempPerson?.personFirstName, Validators.required],
+      personLastName: [this.tempPerson?.personLastName, Validators.required],
+      personNationalCode: [this.tempPerson?.personNationalCode, Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(10)])],
+      personFatherName: [this.tempPerson?.personFatherName, Validators.required],
+      personCertificateNo: [this.tempPerson?.personCertificateNo, Validators.required],
+      personBirthDate: [personBirthDate, Validators.required],
+
+      personBirthPlaceStateID: [this.tempPerson?.personBirthPlaceStateID],
+      personBirthPlaceCityID: [null],
+
+      genderID: [this.tempPerson?.genderID, Validators.required],
+      maritalStatusID: [this.tempPerson?.maritalStatusID, Validators.required],
+
+      educationTypeID: [this.tempPerson?.educationTypeID],
+      educationBranchID: [null],
+      universityID: [this.tempPerson?.universityID],
+
+      personPhone: [this.tempPerson?.personPhone],
+      personCellPhone: [this.tempPerson?.personCellPhone, Validators.required],
+
+      personStateID: [this.tempPerson?.personStateID, Validators.required],
+      personCityID: [null, Validators.required],
+      personRegion: [this.tempPerson?.personRegion, Validators.required],
+      personArea: [this.tempPerson?.personArea, Validators.required],
+
+      personPostalCode: [this.tempPerson?.personPostalCode, Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(10)])],
+      personAddress: [this.tempPerson?.personAddress, Validators.required],
+
+      personDescription: [this.tempPerson?.personDescription],
+    });
   }
 }
