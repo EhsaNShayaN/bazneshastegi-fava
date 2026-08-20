@@ -1,0 +1,4 @@
+﻿namespace Bazneshastegi.Contracts.UserContracts.SigninContracts.SigninWithMobileContracts.SendOtpToExistingMobileContracts;
+
+public readonly record struct SendOtpToExistingMobileApiRequest(string Mobile);
+

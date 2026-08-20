@@ -1,0 +1,46 @@
+﻿using SRH.MediatRMessaging;
+
+namespace Bazneshastegi.Application.Features.FormsFeature.InsertComplementaryFeature;
+
+public sealed record class InsertComplementaryCommand(
+    string RequestComplementaryID,
+    bool InsertPayAmountInCertificate,
+    bool InsertDurationInCertificate,
+    string ApplicantNationalCode,
+    DateTime? ApplicantBirthDate,
+    string ApplicantFirstName,
+    string ApplicantLastName,
+    string ApplicantRelationship,
+    string RelatedPersonID,
+    string PrizeReceiverLookupID,
+    string FacilityGiverLookupID,
+    string FacilityGiverDesc,
+    decimal? FacilityAmount,
+    decimal? FacilityDiscountPercent,
+    int? FacilityInstalementCount,
+    bool NeedGuarantor,
+    bool ReferralToCommittee,
+    string IssueTypeLookupID,
+    string PreviousCardNumber,
+    string FacilityReceiverFullName,
+    string FacilityReceiveTypeLookupID,
+    string CeremonyTypeLookupID,
+    DateTime? CeremonyDate,
+    int? CeremonyGuestCount,
+    string IntroducedToLookupID,
+    string RequestDescription,
+    string PersonID,
+    string RequestTypeID,
+    string RequestID,
+    decimal? ServiceCost,
+    decimal? DeliveryCost) : IPrimitiveResultCommand<InsertComplementaryCommandResponse>,
+    IValidatableRequest<InsertComplementaryCommand>
+{
+    public ValueTask<PrimitiveResult<InsertComplementaryCommand>> Validate() => PrimitiveResult.Success(this)
+            .Ensure([
+                value => PrimitiveResult.Success(this.RequestID)
+                .Match(
+                    _ => PrimitiveResult.Success() ,
+                    _ => PrimitiveResult.Failure("Validation.Error", "موبایل ارسالی نامعتبر است"))
+                ]);
+}

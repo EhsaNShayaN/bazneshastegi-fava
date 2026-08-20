@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Http" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" />
+		<PackageReference Include="Microsoft.FeatureManagement" />
+		<PackageReference Include="Scrutor" />
+		<PackageReference Include="Polly.Contrib.DuplicateRequestCollapser" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\SRH.Libraries\SRH.MediatRMessaging\SRH.MediatRMessaging.csproj" />
+		<ProjectReference Include="..\..\SRH.Libraries\SRH.ServiceInstaller\SRH.ServiceInstaller.csproj" />
+		<ProjectReference Include="..\Bazneshastegi.Domain\Bazneshastegi.Domain.csproj" />
+	</ItemGroup>
+
+</Project>

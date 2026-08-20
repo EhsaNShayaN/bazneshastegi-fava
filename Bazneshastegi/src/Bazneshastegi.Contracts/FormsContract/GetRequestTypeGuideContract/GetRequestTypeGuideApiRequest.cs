@@ -1,0 +1,3 @@
+﻿namespace Bazneshastegi.Contracts.FormsContract.GetRequestTypeGuideContract;
+
+public readonly record struct GetRequestTypeGuideApiRequest(string RequestTypeID);

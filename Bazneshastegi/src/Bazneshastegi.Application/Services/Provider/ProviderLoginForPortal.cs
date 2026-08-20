@@ -1,0 +1,42 @@
+﻿namespace Bazneshastegi.Application.Services.Provider;
+
+public readonly record struct ProviderLoginForPortalRequest(string NationalCode, string CellPhone);
+public readonly record struct ProviderLoginForPortalResponse(string Token);
+
+public readonly record struct ProviderLoginForPortalProxyResponse(
+    string PersonID,
+    string PensionaryID,
+    string PersonNationalCode,
+    string PersonFirstName,
+    string PersonLastName,
+    string PersonFatherName,
+    string PersonCertificateNo,
+    DateTime? PersonBirthDate,
+    string PersonAddress,
+    string PersonPostalCode,
+    int? PersonRegion,
+    int? PersonArea,
+    string PersonPhone,
+    string PersonCellPhone,
+    string PersonCellPhone2,
+    int? RetiredID,
+    int? RetiredRealDuration,
+    int? RetiredRealDurationYEAR,
+    int? RetiredRealDurationMONTH,
+    int? RetiredRealDurationDAY,
+    string ParentPersonID,
+    string PensionaryStatusID,
+    string PensionaryStatusName,
+    string GenderID,
+    string RelationshipWithParentID,
+    string RelationshipWithParentName,
+    DateTime? RetirementDate,
+    decimal? PayAmount,
+    string EducationTypeID,
+    string EducationTypeName,
+    string EducationTypeCaption,
+    string BasketReceiveTypeID,
+    string BasketReceiveTypeName,
+    decimal? RemainedAmountForCertificate,
+    string EmploymentTypeID,
+    string EmploymentTypeName);

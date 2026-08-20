@@ -1,0 +1,3 @@
+﻿namespace Bazneshastegi.Contracts.FormsContract.RequestTypeAttachmentContract;
+
+public readonly record struct RequestTypeAttachmentApiRequest(string RequestTypeID);

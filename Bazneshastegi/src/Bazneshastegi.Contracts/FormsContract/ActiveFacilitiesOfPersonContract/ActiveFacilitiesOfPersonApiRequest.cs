@@ -1,0 +1,3 @@
+﻿namespace Bazneshastegi.Contracts.FormsContract.ActiveFacilitiesOfPersonContract;
+
+public readonly record struct ActiveFacilitiesOfPersonApiRequest(string RequestTypeID);

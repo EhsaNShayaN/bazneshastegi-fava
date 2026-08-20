@@ -1,0 +1,6 @@
+@Bazneshastegi.Server_HostAddress = http://localhost:5124
+
+GET {{Bazneshastegi.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

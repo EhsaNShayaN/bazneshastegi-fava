@@ -1,0 +1,265 @@
+<h2 class="text-center mb-2">گواهی کسر از حقوق</h2>
+
+@if (form) {
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <h2>ثبت درخواست</h2>
+    <div class="mt-2">
+      <!-- حقوق ضامن -->
+      <div fxLayout="row wrap">
+        <div fxFlex="100" fxFlex.gt-xs="50" class="pl-2">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>حقوق ضامن(ريال)</mat-label>
+            <input matInput [value]="this.personInfo!.payAmount | customCurrency" class="ltr" [disabled]="true">
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-xs="50" class="pr-2">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>مبلغ مانده کسر از حقوق(ريال)</mat-label>
+            <input matInput [value]="this.personInfo!.remainedAmountForCertificate | customCurrency" class="ltr"
+                   [disabled]="true">
+          </mat-form-field>
+        </div>
+      </div>
+
+    <div fxLayout="row wrap">
+      <div class="control-row">
+        <mat-checkbox formControlName="includeSalary">درج حقوق در گواهی</mat-checkbox>
+      </div>
+      <div class="control-row">
+        <mat-checkbox formControlName="includeHistory">درج سابقه در گواهی</mat-checkbox>
+      </div>
+    </div>
+
+    <!-- مشخصات وام گیرنده -->
+    <mat-divider class="mb-1"></mat-divider>
+    <h3>مشخصات وام‌گیرنده</h3>
+    <mat-divider class="mt-1"></mat-divider>
+
+    <div formGroupName="borrower" class="mt-3">
+      <div fxLayout="row wrap">
+
+        <div fxFlex="100" fxFlex.gt-xs="50" class="pl-2">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>کد ملی</mat-label>
+            <input matInput formControlName="nationalCode" required onlyNumber maxlength="10" class="ltr">
+            <mat-error *ngIf="borrower.get('nationalCode')?.touched && borrower.get('nationalCode')?.invalid">
+              کد ملی نا معتبر است
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div fxFlex="100" fxFlex.gt-xs="50" class="pr-2">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>تاریخ تولد</mat-label>
+            <input #dateInput matInput [matDatepicker]="picker" formControlName="birthDate" class="ltr" onlyNumber
+                   (dateChange)="dateChanged(dateInput)" placeholder="تاریخ تولد">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="borrower.get('birthDate')?.touched && borrower.get('birthDate')?.hasError('required')">
+              تاریخ تولد اجباری می باشد
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+      </div>
+
+      <div fxLayout="row wrap">
+        <div fxFlex="100" fxFlex.gt-xs="33.3">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>نام</mat-label>
+            <input matInput formControlName="firstName">
+            <mat-error *ngIf="borrower.get('firstName')?.touched && borrower.get('firstName')?.hasError('required')">
+              نام اجباری می باشد
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-xs="33.3" class="px-2">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>نام خانوادگی</mat-label>
+            <input matInput formControlName="lastName">
+            <mat-error *ngIf="borrower.get('lastName')?.touched && borrower.get('lastName')?.hasError('required')">
+              نام خانوادگی اجباری می باشد
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-xs="33.3">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>نسبت</mat-label>
+            <input matInput formControlName="relation">
+            <mat-error *ngIf="borrower.get('relation')?.touched && borrower.get('relation')?.hasError('required')">
+              نسبت اجباری می باشد
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <!-- مشخصات وام دهنده -->
+    <mat-divider class="mb-1"></mat-divider>
+    <h3>مشخصات وام‌دهنده</h3>
+    <mat-divider class="mt-1"></mat-divider>
+
+    <div formGroupName="lender" class="mt-3">
+
+      <div fxLayout="row wrap">
+        <div fxFlex="100" fxFlex.gt-xs="33.3">
+          <app-custom-select
+            formControlName="name"
+            [items]="lenders"
+            placeholder="نام وام دهنده"
+            [required]="true"
+            (selectionChange)="lenderChanged($event)"
+          ></app-custom-select>
+          <mat-error class="custom-error"
+                     *ngIf="lender.get('name')?.touched && lender.get('name')?.hasError('required')">
+            نام وام دهنده را انتخاب نمایید.
+          </mat-error>
+        </div>
+        @if (facilityGiverLookupId === '-1') {
+          <div fxFlex="100" fxFlex.gt-xs="66.6" class="pr-2">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>نام وام دهنده</mat-label>
+              <input matInput formControlName="facilityGiverDesc">
+              <mat-error
+                *ngIf="lender.get('facilityGiverDesc')?.touched && lender.get('facilityGiverDesc')?.hasError('required')">
+                نام وام دهنده اجباری می باشد
+              </mat-error>
+            </mat-form-field>
+          </div>
+        } @else {
+          <div fxFlex="100" fxFlex.gt-xs="33.3" class="px-2">
+            @if ((branches?.length ?? 0) > 0) {
+              <app-custom-select
+                formControlName="branchName"
+                [items]="branches"
+                placeholder="نام شعبه"
+                [required]="true"
+                (selectionChange)="branchChanged($event)"
+              ></app-custom-select>
+              <mat-error class="custom-error"
+                         *ngIf="lender.get('branchName')?.touched && lender.get('branchName')?.hasError('required')">
+                نام شعبه را انتخاب نمایید.
+              </mat-error>
+            } @else {
+              <mat-form-field appearance="outline" class="w-100 position-relative">
+                <mat-label>نام شعبه</mat-label>
+                @if (branchLoading) {
+                  <div class="loading-wrapper">
+                    <img src="/assets/loading.gif" class="img-loading">
+                  </div>
+                }
+                <mat-select formControlName="branchName" required (selectionChange)="branchChanged($event)">
+                </mat-select>
+                <mat-error *ngIf="lender.get('branchName')?.touched && lender.get('branchName')?.hasError('required')">
+                  نام شعبه را انتخاب نمایید.
+                </mat-error>
+              </mat-form-field>
+            }
+          </div>
+          <div fxFlex="100" fxFlex.gt-xs="33.3">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>کد شعبه</mat-label>
+              <input matInput formControlName="branchCode">
+              <mat-error *ngIf="lender.get('branchCode')?.touched && lender.get('branchCode')?.hasError('required')">
+                کد شعبه اجباری می باشد
+              </mat-error>
+            </mat-form-field>
+          </div>
+        }
+      </div>
+
+      <div fxLayout="row wrap">
+        <div fxFlex="100" fxFlex.gt-xs="50" class="pl-2">
+          <app-currency-input
+            label="مبلغ وام(ریال)"
+            placeholder="مبلغ وام(ریال)"
+            formControlName="loanAmount"
+            (changed)="onLoanAmountChange($event)"
+            (keyPressed)="onLoanAmountKeyPress($event)"
+            (keyUpEvent)="onLoanAmountKeyUp($event)"
+            [required]="true"
+          ></app-currency-input>
+          <mat-error class="custom-error"
+                     *ngIf="lender.get('loanAmount')?.touched && lender.get('loanAmount')?.hasError('required')">
+            مبلغ اجباری است
+          </mat-error>
+        </div>
+        <div fxFlex="100" fxFlex.gt-xs="50" class="pr-2">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>تعداد اقساط</mat-label>
+            <input matInput formControlName="installmentCount" min="1" type="number" onlyNumber class="ltr">
+            <mat-error
+              *ngIf="lender.get('installmentCount')?.touched && lender.get('installmentCount')?.hasError('required')">
+              تعداد اقساط اجباری می باشد
+            </mat-error>
+            <mat-error
+              *ngIf="lender.get('installmentCount')?.touched && lender.get('installmentCount')?.hasError('min')">
+              حداقل باید یک قسط انتخاب شود
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    @if ((attachments.controls?.length ?? 0) > 0) {
+      <div class="control-row mb-2 doc-box">
+        <h3>مدارک مورد نیاز</h3>
+        <div formArrayName="attachments">
+          @for (attachment of attachments.controls; track attachment; let i = $index) {
+            <div [formGroupName]="i" class="attachment-row">
+              <mat-label class="ml-1">{{ attachment.get('type')?.value }}</mat-label>
+              <input type="file" accept="image/*,application/pdf" (change)="onFileSelected($event, i)"/>
+              @if (attachment.get('file')?.invalid && attachment.get('file')?.touched) {
+                <div class="error">
+                  {{ attachment.get('type')?.value }}
+                  اجباری می باشد
+                </div>
+              }
+            </div>
+          }
+        </div>
+      </div>
+    }
+    </div>
+
+    <div fxLayout="row wrap" fxLayoutAlign="end center">
+      <button mat-raised-button color="primary" type="submit" submitLoading #btn="submitLoading">ذخیره و ارسال</button>
+    </div>
+  </form>
+}
+
+<div>
+  <hr class="my-3 border-primary"/>
+  <h3>لیست گواهی کسر از حقوقهای فعال</h3>
+  <mat-divider class="mt-1"></mat-divider>
+  @if (dataSource) {
+    <table [dataSource]="dataSource" class="w-100 mt-3" mat-table multiTemplateDataRows>
+      @for (column of columnsToDisplay; track column.key) {
+        <ng-container matColumnDef="{{column.key}}">
+          <th *matHeaderCellDef mat-header-cell>{{ column.name }}</th>
+          <td *matCellDef="let element; let i = index;" mat-cell>
+            @switch (column.key) {
+              @case ('facilityAmount') {
+                {{ element.facilityAmount | customCurrency }}
+                ريال
+              }
+              @case ('facilityGiverDesc2') {
+
+              }
+              @default {
+                {{ element[column.key] }}
+              }
+            }
+          </td>
+        </ng-container>
+      }
+      <ng-container matColumnDef="expand">
+        <th *matHeaderCellDef aria-label="row actions" mat-header-cell>&nbsp;</th>
+      </ng-container>
+      <tr *matHeaderRowDef="currentColumnsToDisplay" mat-header-row></tr>
+      <tr *matRowDef="let element; columns: currentColumnsToDisplay;" class="example-element-row" mat-row>
+      </tr>
+    </table>
+    <mat-paginator [length]="totalCount" [pageSizeOptions]="[10, 50, 100]"></mat-paginator>
+  }
+</div>

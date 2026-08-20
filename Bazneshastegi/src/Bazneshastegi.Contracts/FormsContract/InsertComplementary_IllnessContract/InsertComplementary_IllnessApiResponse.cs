@@ -1,0 +1,2 @@
+﻿namespace Bazneshastegi.Contracts.FormsContract.InsertComplementary_IllnessContract;
+public readonly record struct InsertComplementary_IllnessApiResponse();

@@ -1,0 +1,110 @@
+@use '../../theme/styles/variables' as *;
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 100%;
+}
+
+.dependents {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dependent-item {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  border: 1px dashed #ccc;
+  padding: 12px;
+  border-radius: 6px;
+}
+
+.submit-btn {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+input[type="file"] {
+  margin-top: 10px;
+}
+
+.control-row {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.certificate-item {
+  border: 1px solid #ddd;
+  padding: 12px;
+  margin-bottom: 8px;
+  border-radius: 6px;
+}
+
+div.mat-mdc-form-field-error,
+.custom-error {
+  font-size: .75rem;
+  font-weight: normal;
+  margin: -1.5rem 1rem;
+}
+
+.error {
+  color: red;
+  font-size: .75rem;
+}
+
+.mat-mdc-form-field-error {
+  margin-bottom: 1rem;
+}
+
+.bg-white {
+  background-color: #fff !important;
+  border: solid 1px #ddd !important;
+}
+
+.loading-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+
+  .img-loading {
+    height: 56px;
+  }
+}
+
+.loading-spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top: 3px solid white;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  display: inline-block;
+  border-top: 3px solid red !important;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.border-primary {
+  border-color: $primary;
+  border-width: 2px;
+}
+
+.doc-box {
+  padding: 12px 0;
+  border-top: solid 2px $primary;
+}
+
+.m-minus {
+  margin-top: -1rem;
+}

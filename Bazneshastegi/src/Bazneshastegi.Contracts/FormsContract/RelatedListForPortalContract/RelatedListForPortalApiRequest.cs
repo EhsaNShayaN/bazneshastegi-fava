@@ -1,0 +1,3 @@
+﻿namespace Bazneshastegi.Contracts.FormsContract.RelatedListForPortalContract;
+
+public readonly record struct RelatedListForPortalApiRequest(string RequestTypeID);

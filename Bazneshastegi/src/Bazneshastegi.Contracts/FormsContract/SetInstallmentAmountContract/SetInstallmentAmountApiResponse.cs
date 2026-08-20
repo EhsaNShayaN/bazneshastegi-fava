@@ -1,0 +1,22 @@
+﻿namespace Bazneshastegi.Contracts.FormsContract.SetInstalementAmountContract;
+public readonly record struct SetInstalementAmountApiResponse(
+    string RequestTypeConfigID,
+    Guid? RequestTypeID,
+    string LookupID,
+    decimal? DefaultAmount,
+    decimal? DeliveryCost,
+    int? DefaultInstalementCount,
+    decimal? DefaultDiscountPercent,
+    decimal? ProfitOrDiscountPercent,
+    decimal? GuarantorCost,
+    DateTime? ValidationStartDate,
+    string? FacilityReceiverRelationshipID,
+    string PensionaryStatusCategory,
+    string GenderLookupID,
+    bool? IsActive,
+    string RequestTypeName,
+    string LookupName,
+    string? FacilityReceiverRelationshipName,
+    string? PensionaryStatusCategoryName,
+    string? GenderName,
+    decimal? DefaultInstalementAmount);

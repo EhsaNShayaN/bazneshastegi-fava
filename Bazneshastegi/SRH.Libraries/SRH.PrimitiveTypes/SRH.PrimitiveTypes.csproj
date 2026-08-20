@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Result\ContextualResult.cs" />
+    <Compile Remove="Result\ContextualResultExtensions.cs" />
+    <Compile Remove="Result\FaultTolerantPipeline.cs" />
+  </ItemGroup>
+
+</Project>

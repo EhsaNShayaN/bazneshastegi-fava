@@ -1,0 +1,15 @@
+<div class="mt-4">
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>انتخاب فرم</mat-label>
+    <mat-select (selectionChange)="selectForm($event)">
+      @for (item of requestTypes; track item.requestTypeID) {
+      <mat-option [value]="item">{{ item.name }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+</div>
+<div>
+  <!--<button mat-raised-button color="primary" type="button" submitLoading #btn="submitLoading" (onClick)="alert(123)">
+    SSO
+  </button>-->
+</div>

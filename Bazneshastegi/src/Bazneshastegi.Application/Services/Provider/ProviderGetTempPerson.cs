@@ -1,0 +1,43 @@
+﻿namespace Bazneshastegi.Application.Services.Provider;
+
+public readonly record struct ProviderGetTempPersonRequest(
+    string? PersonID,
+    bool? IsNewPerson);
+
+public readonly record struct ProviderGetTempPersonResponse(
+    string? TempPersonID,
+    bool? IsNewPerson,
+    string? ThisPersonID,
+    string? RequestID,
+    bool? IsChecked,
+    string? LoginedPersonID,
+    string? RelationshipID,
+    string? PensionaryStatusID,
+    string? PersonNationalCode,
+    string? PersonFirstName,
+    string? PersonLastName,
+    string? PersonFatherName,
+    string? PersonCertificateNo,
+    DateTime? PersonBirthDate,
+    string? PersonBirthPlaceStateID,
+    string? PersonBirthPlaceCityID,
+    string? PersonCountryID,
+    string? PersonStateID,
+    string? PersonCityID,
+    string? PersonAddress,
+    string? PersonPostalCode,
+    int? PersonRegion,
+    int? PersonArea,
+    string? PersonPhone,
+    string? PersonCellPhone,
+    string? GenderID,
+    string? MaritalStatusID,
+    string? EducationTypeID,
+    string? UniversityID,
+    string? EducationTypeCaption,
+    string? UniversityCaption,
+    string? PersonDescription,
+    bool? IsUnderGauarantee,
+    string? ExistingPerson,
+    string EducationTypeName,
+    string RelationshipName);
