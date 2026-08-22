@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Bazneshastegi.Presentation.Features.Authentication;
@@ -13,8 +12,8 @@ public static partial class LoginEndpoints
     static LoginEndpoints()
     {
         SSOLogin();
-        SSOTest();
         SSOLoginRedirect();
+        SSOTest();
     }
     public static void AddAllEndpoitnts(WebApplication app, RouteGroupBuilder? group = null)
     {
@@ -35,7 +34,6 @@ public static partial class LoginEndpoints
                     CancellationToken cancellationToken) =>
                 {
                     var optsValue = opts.Value;
-
                     var state = Guid.NewGuid().ToString("N");
                     var builder = new UriBuilder(optsValue.LoginUrl);
                     builder.AddQuery("response_type", "code");
@@ -43,28 +41,7 @@ public static partial class LoginEndpoints
                     builder.AddQuery("redirect_uri", optsValue.RedirectUrl);
                     builder.AddQuery("scope", optsValue.Scope);
                     builder.AddQuery("state", state);
-
-                    /*string docPath = Directory.GetCurrentDirectory();
-                    using (StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, $"response.txt")))
-                    {
-                        await outputFile.WriteAsync(builder.Uri.ToString());
-                    }*/
-
                     return TypedResults.Redirect(builder.Uri.ToString());
-                }).WithTags(TagName);
-            return builder;
-        });
-    }
-    static void SSOTest()
-    {
-        _routeHandlerBuilders.Add((app) =>
-        {
-            var builder = app.MapGet("api/v1/sso/test",
-                async (CancellationToken cancellationToken) =>
-                {
-                    string docPath = Directory.GetCurrentDirectory();
-                    var result =  File.ReadAllText(Path.Combine(docPath, $"response.txt"));
-                    return TypedResults.Ok(result);
                 }).WithTags(TagName);
             return builder;
         });
@@ -88,9 +65,7 @@ public static partial class LoginEndpoints
                     {
 
                     }
-
                     using var client = httpClientFactory.CreateClient();
-
                     /*var tokenResponse2 = client.RequestAuthorizationCodeTokenAsync(new AuthorizationCodeTokenRequest
                     {
                         Address = "https://Url/ApiContainer.SSO.RCL1/connect/token",
@@ -99,8 +74,6 @@ public static partial class LoginEndpoints
                         Code = code,
                         RedirectUri = "Url",
                     }).Result;*/
-
-
                     var request = new HttpRequestMessage(HttpMethod.Post, opts.Value.AccessTokenUrl);
                     var parameters = new Dictionary<string, string>
                     {
@@ -110,32 +83,51 @@ public static partial class LoginEndpoints
                         ["code"] = code!,
                     };
                     request.Content = new FormUrlEncodedContent(parameters);
-
-                    var response = await client.SendAsync(
-                        request,
-                        cancellationToken).ConfigureAwait(false);
-
-                    var content = await response.Content.ReadAsStringAsync(cancellationToken);
-
                     string docPath = Directory.GetCurrentDirectory();
-                    using (StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, $"response.txt")))
+                    try
                     {
-                        await outputFile.WriteAsync(content);
+                        var response = await client.SendAsync(
+                            request,
+                            cancellationToken).ConfigureAwait(false);
+                        var content = await response.Content.ReadAsStringAsync(cancellationToken);
+                        using (StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, $"response.txt")))
+                        {
+                            await outputFile.WriteAsync(content);
+                            outputFile.Close();
+                        }
+                        if (!response.IsSuccessStatusCode)
+                        {
+                            throw new Exception($"Token request failed: {response.StatusCode} - {content}");
+                        }
+                        /*var resp = JsonSerializer.Deserialize<SSOTokenResponse>(
+                           content,
+                           new JsonSerializerOptions { PropertyNameCaseInsensitive = true })!;
+                        var handler = new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler();
+                        var jwtToken = handler.ReadJwtToken(resp.Token);
+                        var UserName = jwtToken.Claims.First(claim => claim.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name").Value;*/
                     }
-
-                    if (!response.IsSuccessStatusCode)
+                    catch (Exception ex)
                     {
-                        throw new Exception($"Token request failed: {response.StatusCode} - {content}");
+                        using (StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, $"response.txt")))
+                        {
+                            await outputFile.WriteAsync("Error: " + ex.InnerException is null ? ex.Message : ex.InnerException!.Message);
+                            outputFile.Close();
+                        }
                     }
-
-                    var resp = JsonSerializer.Deserialize<SSOTokenResponse>(
-                       content,
-                       new JsonSerializerOptions { PropertyNameCaseInsensitive = true })!;
-
-                    var handler = new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler();
-                    /*var jwtToken = handler.ReadJwtToken(resp.Token);
-                    var UserName = jwtToken.Claims
-                        .First(claim => claim.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name").Value;*/
+                }).WithTags(TagName);
+            return builder;
+        });
+    }
+    static void SSOTest()
+    {
+        _routeHandlerBuilders.Add((app) =>
+        {
+            var builder = app.MapGet("api/v1/sso/test",
+                async (CancellationToken cancellationToken) =>
+                {
+                    string docPath = Directory.GetCurrentDirectory();
+                    var result = File.ReadAllText(Path.Combine(docPath, $"response.txt"));
+                    return TypedResults.Ok(result);
                 }).WithTags(TagName);
             return builder;
         });
@@ -153,7 +145,6 @@ public sealed class SSLOptions
     public string Scope { get; set; } = string.Empty;
     public string RedirectUrl { get; set; } = string.Empty;
 }
-
 static class UrlBuilderExtensions
 {
     public static UriBuilder AddQuery(this UriBuilder src, string key, object value)
@@ -188,7 +179,7 @@ public sealed class SSOTokenResponse0
     [JsonPropertyName("id_token")]
     public string? IdToken { get; set; }
 }
-public class SSOTokenResponse
+public sealed class SSOTokenResponse
 {
     [Display(Name = "nameid")]
     public long? Id { get; set; }
