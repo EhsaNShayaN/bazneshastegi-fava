@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {mobileValidator} from '../../../core/utils/app-validators';
 import {PureComponent} from '../../../pure-component';
@@ -15,9 +15,10 @@ import {SubmitLoadingDirective} from '../../../core/directives/submit-loading.di
   styleUrl: './login.scss',
   standalone: false,
 })
-export class Login extends PureComponent implements OnInit {
+export class Login extends PureComponent {
   form: FormGroup;
   @ViewChild('btn') btn!: SubmitLoadingDirective;
+  sso = environment.loginBySSO;
 
   constructor(private restApiService: RestApiService,
               private router: Router,
@@ -27,12 +28,6 @@ export class Login extends PureComponent implements OnInit {
     this.form = this.fb.group({
       nationalCode: [environment.production ? '' : '0045723702', Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(10)])],
       cellPhone: [environment.production ? '' : '09121017503', Validators.compose([Validators.required, mobileValidator])],
-    });
-  }
-
-  ngOnInit() {
-    this.restApiService.ssoLogin().subscribe((b: any) => {
-    }, (err) => {
     });
   }
 
@@ -63,5 +58,14 @@ export class Login extends PureComponent implements OnInit {
       this.form.markAllAsTouched();
       console.log(this.findInvalidControls(this.form));
     }
+  }
+
+  loginBySSO() {
+    this.startLoading();
+    this.restApiService.ssoLogin().subscribe((b: any) => {
+      this.stopLoading();
+    }, (err) => {
+      this.stopLoading();
+    });
   }
 }

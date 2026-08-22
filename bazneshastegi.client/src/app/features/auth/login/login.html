@@ -1,42 +1,49 @@
 <div class="login-container">
   <mat-card class="login-card">
     <h2 class="mb-2">ورود به حساب کاربری</h2>
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <div>
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>کدملی</mat-label>
-          <input matInput type="text" formControlName="nationalCode" required
-                 [minLength]="10" [maxLength]="10" onlyNumber class="ltr">
-        </mat-form-field>
-        @if (form.get('nationalCode')?.touched) {
-          <mat-error *ngIf="form.get('nationalCode')?.hasError('required')">
-            کدملی اجباری می باشد
-          </mat-error>
-          <mat-error *ngIf="form.get('nationalCode')?.hasError('minlength')">
-            کدملی باید 10 کاراکتر باشد.
-          </mat-error>
-          <mat-error *ngIf="form.get('nationalCode')?.hasError('maxlength')">
-            کدملی باید 10 کاراکتر باشد.
-          </mat-error>
-        }
-      </div>
-      <div>
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>موبایل</mat-label>
-          <input matInput type="number" formControlName="cellPhone" required onlyNumber class="ltr" [maxLength]="12">
-        </mat-form-field>
-        @if (form.get('cellPhone')?.touched) {
-          <mat-error *ngIf="form.get('cellPhone')?.hasError('required')">
-            موبایل اجباری می باشد
-          </mat-error>
-          <mat-error *ngIf="form.get('cellPhone')?.hasError('invalidMobile')">
-            موبایل نامعتبر است.
-          </mat-error>
-        }
-      </div>
-      <button mat-raised-button color="primary" type="submit" submitLoading #btn="submitLoading">
-        ورود
+    @if (sso) {
+      <button mat-raised-button color="primary" type="button" submitLoading #btn="submitLoading"
+              class="m-7" (click)="loginBySSO()">
+        ورود با sso
       </button>
-    </form>
+    } @else {
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>کدملی</mat-label>
+            <input matInput type="text" formControlName="nationalCode" required
+                   [minLength]="10" [maxLength]="10" onlyNumber class="ltr">
+          </mat-form-field>
+          @if (form.get('nationalCode')?.touched) {
+            <mat-error *ngIf="form.get('nationalCode')?.hasError('required')">
+              کدملی اجباری می باشد
+            </mat-error>
+            <mat-error *ngIf="form.get('nationalCode')?.hasError('minlength')">
+              کدملی باید 10 کاراکتر باشد.
+            </mat-error>
+            <mat-error *ngIf="form.get('nationalCode')?.hasError('maxlength')">
+              کدملی باید 10 کاراکتر باشد.
+            </mat-error>
+          }
+        </div>
+        <div>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>موبایل</mat-label>
+            <input matInput type="number" formControlName="cellPhone" required onlyNumber class="ltr" [maxLength]="12">
+          </mat-form-field>
+          @if (form.get('cellPhone')?.touched) {
+            <mat-error *ngIf="form.get('cellPhone')?.hasError('required')">
+              موبایل اجباری می باشد
+            </mat-error>
+            <mat-error *ngIf="form.get('cellPhone')?.hasError('invalidMobile')">
+              موبایل نامعتبر است.
+            </mat-error>
+          }
+        </div>
+        <button mat-raised-button color="primary" type="submit" submitLoading #btn="submitLoading">
+          ورود
+        </button>
+      </form>
+    }
   </mat-card>
 </div>
