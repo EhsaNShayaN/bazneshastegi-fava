@@ -1,4 +1,4 @@
-import {HttpClient, HttpContext, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpContext, HttpErrorResponse} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, map, Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
@@ -50,14 +50,9 @@ export class RestApiService {
               private authService: AuthService) {
   }
 
-  loginForPortal(nationalCode: string, cellPhone: string, captcha: string, captchaId: string): Observable<any> {
-    const headers = new HttpHeaders({
-      'x-CaptchaValue': captcha,
-      'x-CaptchaId': captchaId
-    });
+  loginForPortal(nationalCode: string, cellPhone: string): Observable<any> {
     return this.http.get<LoginForPortalResponse>(
-      `${endpoint()}forms/loginForPortal?nationalCode=${nationalCode}&cellPhone=${cellPhone}`,
-      { headers })
+      `${endpoint()}forms/loginForPortal?nationalCode=${nationalCode}&cellPhone=${cellPhone}`)
       .pipe(catchError(this.handleError),
         map((d: LoginForPortalResponse) => {
           if (d.isSuccess) {
@@ -343,18 +338,6 @@ export class RestApiService {
     return this.http.post<BaseResult<{ done: boolean }>>(`${endpoint()}cookie-consent`, {}).pipe(
       catchError(this.handleError)
     );
-  }
-
-  getCaptchaInfo(): Observable<any> {
-    return this.http.get<BaseResult<{ id: string, expiry: string }>>(`${endpoint()}captcha/new`).pipe(
-      catchError(this.handleError)
-    );
-  }
-
-  generateCaptcha(id: string, width: number = 300, height: number = 200): Observable<CaptchaImageInfo> {
-    return this.http.get<CaptchaImageInfo>(`${endpoint()}captcha/img?id=${id}&width=${width}&height=${height}`, {
-      context: new HttpContext().set(SKIP_INTERCEPTOR, true)
-    });
   }
 
   calculateMedicalTreatmentCost(

@@ -1,16 +1,12 @@
 ﻿using Bazneshastegi.Application.Options;
 using Bazneshastegi.Infrastructure;
-using Bazneshastegi.Infrastructure.Services.Provider;
 using Bazneshastegi.Presentation;
 using Bazneshastegi.Presentation.Abstraction;
 using Bazneshastegi.Presentation.Features.Authentication;
-using Bazneshastegi.Presentation.Features.Captcha;
-using Bazneshastegi.Presentation.Middlewares;
 using Bazneshastegi.Presentation.Services.ApplicationServices.UserContextAccessorServices;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
-using SixLabors.ImageSharp;
 using SRH.PrimitiveTypes.Result;
 using SRH.ServiceInstaller;
 
@@ -126,7 +122,6 @@ app.MapStaticAssets();
 app.UseStaticFiles();
 app.UseAntiforgery();
 app.UseSession();
-app.UseMiddleware<CaptchaValidatorMiddleware>();
 //app.UseCors(opts =>
 //{
 //    opts.AllowAnyMethod();
@@ -157,7 +152,6 @@ app.UseSwaggerUI(options =>
 app.UseAuthorization();
 //app.UseExceptionHandler();
 app.UseMiddleware<UserContextAccessorMiddleware>();
-CaptchaEndpoints.AddAllEndpoitnts(app);
 LoginEndpoints.AddAllEndpoitnts(app);
 app.UseSession();
 

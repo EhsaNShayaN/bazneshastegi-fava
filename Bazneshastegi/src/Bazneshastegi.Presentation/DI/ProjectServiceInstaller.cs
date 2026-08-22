@@ -1,7 +1,6 @@
 ﻿using Asp.Versioning;
 using Bazneshastegi.Application.Services.UserContextAccessorServices;
 using Bazneshastegi.Presentation.AppCore;
-using Bazneshastegi.Presentation.Features.Captcha;
 using Bazneshastegi.Presentation.GlobalExceptionHandlers;
 using Bazneshastegi.Presentation.Options;
 using Bazneshastegi.Presentation.Services.ApplicationServices.UserContextAccessorServices;
@@ -26,7 +25,6 @@ internal sealed class ProjectServiceInstaller : IServiceInstaller
             .ScanAndAddPresentationMappers([PresentationAssemblyReference.Assembly])
             .InstallGlobalExceptionHandler()
             .InstallApiVersioning()
-            .Configure<CaptchaOption>(config.GetSection("Captcha"))
             .AddDistributedMemoryCache()
             .AddSession(options =>
             {
@@ -36,8 +34,7 @@ internal sealed class ProjectServiceInstaller : IServiceInstaller
                 options.Cookie.SameSite = SameSiteMode.Lax;
 
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
-            })
-            .InstallCaptchaProvider(config);
+            });
     }
 }
 

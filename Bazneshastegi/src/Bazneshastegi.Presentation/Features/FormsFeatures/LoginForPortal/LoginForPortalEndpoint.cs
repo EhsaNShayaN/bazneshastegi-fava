@@ -14,7 +14,6 @@ sealed class LoginForPortalEndpoint : EndpointHandlerBase<
     LoginForPortalApiResponse>
 {
     protected override bool NeedTaxPayerFile => true;
-    protected override bool NeedCaptcha => true;
 
     public LoginForPortalEndpoint(
         IPresentationMapper<LoginForPortalApiRequest, LoginForPortalQuery> requestMapper,

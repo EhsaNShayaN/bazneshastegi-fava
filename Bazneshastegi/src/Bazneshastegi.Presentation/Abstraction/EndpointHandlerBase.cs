@@ -1,5 +1,4 @@
-﻿using ER.Sanjesh.Presentation.EndpointFilters;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 
 namespace Bazneshastegi.Presentation.Abstraction;
@@ -19,7 +18,6 @@ internal abstract class EndpointHandlerBase<THandlerRequest, THandlerResponse, T
     protected virtual bool NeedAuthentication { get; } = true;
     protected virtual bool NeedTaxPayerFile { get; } = true;
     protected virtual bool AdminPrivilages { get; } = false;
-    protected virtual bool NeedCaptcha { get; } = false;
 
     protected virtual Delegate EndpointDelegate =>
       (ISender sender, CancellationToken cancellationToken) => this.CallMediatRHandler(
@@ -79,11 +77,6 @@ internal abstract class EndpointHandlerBase<THandlerRequest, THandlerResponse, T
     public override RouteHandlerBuilder AddRoute(IEndpointRouteBuilder routeBuilder)
     {
         var result = this.MapRoute(routeBuilder, this.EndpointDelegate);
-
-        if (this.NeedCaptcha)
-        {
-            result.RequireCaptchaValidation();
-        }
 
         return result;
     }

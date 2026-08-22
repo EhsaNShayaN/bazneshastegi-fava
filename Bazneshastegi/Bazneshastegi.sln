@@ -39,8 +39,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SRH.ServiceInstaller", "SRH
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{EECFDAA0-5502-42C3-8ADE-43F6982A6060}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bazneshastegi.CaptchaProvider", "src\Bazneshastegi.CaptchaProvider\Bazneshastegi.CaptchaProvider.csproj", "{8457B21A-5A4F-8653-4D04-384DD2117EF2}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -97,10 +95,6 @@ Global
 		{DF2644E7-B8CF-DB1D-C1E9-E954C8A9DDD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF2644E7-B8CF-DB1D-C1E9-E954C8A9DDD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF2644E7-B8CF-DB1D-C1E9-E954C8A9DDD2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8457B21A-5A4F-8653-4D04-384DD2117EF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8457B21A-5A4F-8653-4D04-384DD2117EF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8457B21A-5A4F-8653-4D04-384DD2117EF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8457B21A-5A4F-8653-4D04-384DD2117EF2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -116,7 +110,6 @@ Global
 		{5BF31FBD-9086-488F-9AA9-3D0BE42C3488} = {7983859F-AB2A-4E1B-959F-24C4051E24CC}
 		{7BB339B1-4B50-47E3-81D0-0829D76B91B7} = {7983859F-AB2A-4E1B-959F-24C4051E24CC}
 		{DF2644E7-B8CF-DB1D-C1E9-E954C8A9DDD2} = {7983859F-AB2A-4E1B-959F-24C4051E24CC}
-		{8457B21A-5A4F-8653-4D04-384DD2117EF2} = {EECFDAA0-5502-42C3-8ADE-43F6982A6060}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {286B10C3-DA1E-466C-87A0-A7FA4711B981}

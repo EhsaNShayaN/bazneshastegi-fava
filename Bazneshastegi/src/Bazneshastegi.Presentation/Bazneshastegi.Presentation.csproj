@@ -17,7 +17,6 @@
 	<ItemGroup>
 		<ProjectReference Include="..\..\SRH.Libraries\SRH.PresentationApi\SRH.PresentationApi.csproj" />
 		<ProjectReference Include="..\Bazneshastegi.Application\Bazneshastegi.Application.csproj" />
-		<ProjectReference Include="..\Bazneshastegi.CaptchaProvider\Bazneshastegi.CaptchaProvider.csproj" />
 		<ProjectReference Include="..\Bazneshastegi.Contracts\Bazneshastegi.Contracts.csproj" />
 		<ProjectReference Include="..\Bazneshastegi.Domain\Bazneshastegi.Domain.csproj" />
 		<PackageReference Include="Asp.Versioning.Http" />
