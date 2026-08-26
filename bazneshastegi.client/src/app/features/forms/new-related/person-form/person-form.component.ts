@@ -225,11 +225,6 @@ export class PersonFormComponent extends BaseComponent implements OnInit, OnDest
     });
   }
 
-  ngOnDestroy() {
-    this.sub.unsubscribe();
-    this.sub3.unsubscribe();
-  }
-
   createForm() {
     const personBirthDate = this.tempPerson?.personBirthDate
       ? jMoment(this.tempPerson.personBirthDate)
@@ -266,5 +261,10 @@ export class PersonFormComponent extends BaseComponent implements OnInit, OnDest
 
       personDescription: [this.tempPerson?.personDescription],
     });
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+    this.sub3.unsubscribe();
   }
 }
