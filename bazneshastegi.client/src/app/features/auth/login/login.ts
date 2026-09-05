@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, ElementRef, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {mobileValidator} from '../../../core/utils/app-validators';
 import {PureComponent} from '../../../pure-component';
@@ -8,6 +8,7 @@ import {LoginForPortalResponse} from '../../../core/models/LoginForPortalRespons
 import {AuthService} from '../../../core/services/auth.service';
 import {environment} from '../../../../environments/environment';
 import {SubmitLoadingDirective} from '../../../core/directives/submit-loading.directive';
+import {endpoint} from '../../../core/services/cookie-utils';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,9 @@ import {SubmitLoadingDirective} from '../../../core/directives/submit-loading.di
 export class Login extends PureComponent {
   form: FormGroup;
   @ViewChild('btn') btn!: SubmitLoadingDirective;
+  @ViewChild('ssoForm') ssoForm!: ElementRef<HTMLFormElement>;
   sso = environment.loginBySSO;
+  ssoUrl = `${endpoint()}sso/login`;
 
   constructor(private restApiService: RestApiService,
               private router: Router,
@@ -62,10 +65,6 @@ export class Login extends PureComponent {
 
   loginBySSO() {
     this.startLoading();
-    this.restApiService.ssoLogin().subscribe((b: any) => {
-      this.stopLoading();
-    }, (err) => {
-      this.stopLoading();
-    });
+    this.ssoForm.nativeElement.submit();
   }
 }

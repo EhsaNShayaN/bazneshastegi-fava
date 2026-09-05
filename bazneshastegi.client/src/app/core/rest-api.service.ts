@@ -79,12 +79,6 @@ export class RestApiService {
     );
   }
 
-  ssoLogin(): Observable<any> {
-    return this.http.get<any>(`${endpoint()}sso/login`, {
-      context: new HttpContext().set(SKIP_INTERCEPTOR, true)
-    });
-  }
-
   getRequestTypeConfig(requestTypeId: string,
                        lookupID: string | null = null,
                        facilityReceiverRelationshipID: number | null = null,

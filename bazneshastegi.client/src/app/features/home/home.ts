@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { RestApiService } from '../../core/rest-api.service';
-import { RequestType, RequestTypeResponse } from '../../core/models/RequestTypeResponse';
-import { MatSelectChange } from '@angular/material/select';
-import { Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {RestApiService} from '../../core/rest-api.service';
+import {RequestType, RequestTypeResponse} from '../../core/models/RequestTypeResponse';
+import {MatSelectChange} from '@angular/material/select';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +14,7 @@ export class Home implements OnInit {
   requestTypes: RequestType[] = [];
 
   constructor(private restApiService: RestApiService,
-    private router: Router) {
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -27,12 +27,6 @@ export class Home implements OnInit {
     const requestType = $event.value;
     const url = `/forms/${requestType.page.toLowerCase()}/${requestType.requestTypeID}`;
     this.router.navigate([url]).then(() => {
-    });
-  }
-
-  login() {
-    this.restApiService.ssoLogin().subscribe((b: any) => {
-    }, (err) => {
     });
   }
 }

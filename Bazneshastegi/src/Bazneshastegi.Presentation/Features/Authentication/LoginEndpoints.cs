@@ -15,6 +15,7 @@ public static partial class LoginEndpoints
         SSOLoginRedirect();
         SSOTest();
     }
+    static string GetPath() => Path.Combine(AppContext.BaseDirectory, $"response.txt");
     public static void AddAllEndpoitnts(WebApplication app, RouteGroupBuilder? group = null)
     {
         IEndpointRouteBuilder routeBuilder = group ?? (IEndpointRouteBuilder)app;
@@ -83,18 +84,15 @@ public static partial class LoginEndpoints
                         ["code"] = code!,
                     };
                     request.Content = new FormUrlEncodedContent(parameters);
-                    string docPath = Directory.GetCurrentDirectory();
                     try
                     {
                         var response = await client.SendAsync(
                             request,
                             cancellationToken).ConfigureAwait(false);
                         var content = await response.Content.ReadAsStringAsync(cancellationToken);
-                        using (StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, $"response.txt")))
-                        {
-                            await outputFile.WriteAsync(content);
-                            outputFile.Close();
-                        }
+                        using StreamWriter outputFile = new(GetPath());
+                        await outputFile.WriteAsync(content);
+                        outputFile.Close();
                         if (!response.IsSuccessStatusCode)
                         {
                             throw new Exception($"Token request failed: {response.StatusCode} - {content}");
@@ -108,11 +106,9 @@ public static partial class LoginEndpoints
                     }
                     catch (Exception ex)
                     {
-                        using (StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, $"response.txt")))
-                        {
-                            await outputFile.WriteAsync("Error: " + ex.InnerException is null ? ex.Message : ex.InnerException!.Message);
-                            outputFile.Close();
-                        }
+                        using StreamWriter outputFile = new(GetPath());
+                        await outputFile.WriteAsync("Error: " + ex.GetBaseException().Message);
+                        outputFile.Close();
                     }
                 }).WithTags(TagName);
             return builder;
@@ -126,7 +122,7 @@ public static partial class LoginEndpoints
                 async (CancellationToken cancellationToken) =>
                 {
                     string docPath = Directory.GetCurrentDirectory();
-                    var result = File.ReadAllText(Path.Combine(docPath, $"response.txt"));
+                    var result = File.ReadAllText(GetPath());
                     return TypedResults.Ok(result);
                 }).WithTags(TagName);
             return builder;

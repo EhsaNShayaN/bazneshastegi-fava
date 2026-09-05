@@ -2,10 +2,12 @@
   <mat-card class="login-card">
     <h2 class="mb-2">ورود به حساب کاربری</h2>
     @if (sso) {
-      <button mat-raised-button color="primary" type="button" submitLoading #btn="submitLoading"
-              class="m-7" (click)="loginBySSO()">
-        ورود با sso
-      </button>
+      <form #ssoForm [action]="ssoUrl" method="get">
+        <button mat-raised-button color="primary" type="submit"
+                (click)="loginBySSO()" submitLoading #btn="submitLoading" class="m-7">
+          ورود با sso
+        </button>
+      </form>
     } @else {
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div>

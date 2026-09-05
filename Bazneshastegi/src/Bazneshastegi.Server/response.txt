@@ -1,1 +1,0 @@
-https://srv165-apigateway.tehran.ir/ApiContainer.sso.RCL1/connect/authorize?response_type=code&client_id=test_sso&redirect_uri=https%3a%2f%2fdemo2.tehran.iri%3a8146%2fapi%2fv1%2fsso%2fcallback&scope=openid+profile&state=c553b6dec5cc4f53938ab5306436f1b0
