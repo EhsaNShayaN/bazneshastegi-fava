@@ -1,5 +1,6 @@
 ﻿namespace Bazneshastegi.Contracts.FormsContract.InsertRequestForEditPersonInfoContract;
 public readonly record struct InsertRequestForEditPersonInfoApiRequest(
+    string RequestTypeID,
     string TempPersonID,
     string RequestID,
     string LoginedPersonID,

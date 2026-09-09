@@ -31,7 +31,7 @@ export class DeathAidComponent extends BaseFormComponent implements OnInit {
       applicantRelationship: ['وابستگانم', Validators.required],
       requestDescription: [null],
       attachments: this.fb.array(
-        this.requestTypes.map(s =>
+        this.requestTypeAttachments.map(s =>
           this.fb.group({
             obj: [s],
             type: [s.lookupName],

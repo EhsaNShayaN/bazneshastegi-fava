@@ -37,7 +37,7 @@ export class EssentialLoanComponent extends BaseFormComponent {
           facilityInstalementAmount: [{value: this.requestTypeConfig?.defaultInstalementAmount, disabled: true}, Validators.required],
           requestDescription: [''],
           attachments: this.fb.array(
-            this.requestTypes.map(s =>
+            this.requestTypeAttachments.map(s =>
               this.fb.group({
                 obj: [s],
                 type: [s.lookupName],

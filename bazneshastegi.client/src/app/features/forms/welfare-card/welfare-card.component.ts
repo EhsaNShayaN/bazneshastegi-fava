@@ -53,7 +53,7 @@ export class WelfareCardComponent extends BaseFormComponent implements OnInit {
       previousCardNumber: [''],
       requestDescription: [''],
       attachments: this.fb.array(
-        this.requestTypes.map(s =>
+        this.requestTypeAttachments.map(s =>
           this.fb.group({
             obj: [s],
             type: [s.lookupName],

@@ -31,7 +31,7 @@ export class RetiredGoodsBasketComponent extends BaseFormComponent {
       this.form = this.fb.group({
         basketReceiveTypeID: [false, Validators.required],
         attachments: this.fb.array(
-          this.requestTypes.map(s =>
+          this.requestTypeAttachments.map(s =>
             this.fb.group({
               obj: [s],
               type: [s.lookupName],

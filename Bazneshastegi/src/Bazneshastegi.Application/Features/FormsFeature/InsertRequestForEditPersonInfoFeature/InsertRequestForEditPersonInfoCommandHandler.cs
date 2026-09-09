@@ -23,6 +23,7 @@ public sealed class InsertRequestForEditPersonInfoCommandHandler : IPrimitiveRes
     {
         return await this._bazneshastegiService.InsertRequestForEditPersonInfo(
             new ProviderInsertRequestForEditPersonInfoRequest(
+                request.RequestTypeID,
                 request.TempPersonID,
                 request.RequestID,
                 _userContextAccessor.CurrentPersonId,

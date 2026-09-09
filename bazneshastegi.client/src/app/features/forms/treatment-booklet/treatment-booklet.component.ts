@@ -34,7 +34,7 @@ export class TreatmentBookletComponent extends BaseFormComponent implements OnIn
       issueTypeLookupID: ['', Validators.required],
       facilityReceiveTypeLookupID: ['', Validators.required],
       attachments: this.fb.array(
-        this.requestTypes.map(s =>
+        this.requestTypeAttachments.map(s =>
           this.fb.group({
             obj: [s],
             type: [s.lookupName],

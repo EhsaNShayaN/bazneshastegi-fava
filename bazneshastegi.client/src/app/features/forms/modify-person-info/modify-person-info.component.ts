@@ -5,10 +5,10 @@ import {LookUpDataResponse} from '../../../core/models/LookUpResponse';
 import {MatSelectChange} from '@angular/material/select';
 import {PersonInfo} from '../../../core/models/PersonInfoResponse';
 import {BaseResult} from '../../../core/models/BaseResult';
-import {CustomConstants} from '../../../core/constants/custom.constants';
 import {BaseFormComponent} from '../base-form-component';
 import {InsertRequest} from '../pay-fraction-certificate/pay-fraction-certificate.model';
 import jMoment from 'moment-jalaali';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-modify-person-info',
@@ -21,6 +21,10 @@ export class ModifyPersonInfoComponent extends BaseFormComponent {
   cities: SelectItem[] = [];
   personCities: SelectItem[] = [];
   src = '/assets/no-profile.png';
+
+  constructor(private router: Router) {
+    super();
+  }
 
   override createForm() {
     this.restApiService.getLookupData('state', '').subscribe((states: LookUpDataResponse) => {
@@ -95,9 +99,11 @@ export class ModifyPersonInfoComponent extends BaseFormComponent {
         if (insertResponse) {
           const value = this.form.value;
           value.requestId = insertResponse.data.requestID;
+          value.requestTypeID = this.requestTypeID;
           this.restApiService.insertRequestForEditPersonInfo(values).subscribe((a: BaseResult<PersonInfo>) => {
-            this.toaster.success(CustomConstants.THE_OPERATION_WAS_SUCCESSFUL);
             this.stopLoading();
+            sessionStorage.setItem('modify-person-info', insertResponse.data.requestNO);
+            this.router.navigate(['/']);
           });
         }
       });

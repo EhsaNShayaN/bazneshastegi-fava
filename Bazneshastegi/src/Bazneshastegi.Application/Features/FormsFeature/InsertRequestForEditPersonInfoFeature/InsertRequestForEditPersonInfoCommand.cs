@@ -3,6 +3,7 @@
 namespace Bazneshastegi.Application.Features.FormsFeature.InsertRequestForEditPersonInfoFeature;
 
 public sealed record class InsertRequestForEditPersonInfoCommand(
+    string RequestTypeID,
     string TempPersonID,
     string RequestID,
     string LoginedPersonID,

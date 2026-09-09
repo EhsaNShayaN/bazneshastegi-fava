@@ -37,7 +37,7 @@ export class PayFractionCertificateComponent extends BaseFormComponent implement
       includeSalary: [false],
       includeHistory: [false],
       attachments: this.fb.array(
-        this.requestTypes.map(s =>
+        this.requestTypeAttachments.map(s =>
           this.fb.group({
             obj: [s],
             type: [s.lookupName],

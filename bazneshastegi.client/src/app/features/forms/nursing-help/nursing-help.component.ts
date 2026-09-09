@@ -43,7 +43,7 @@ export class NursingHelpComponent extends BaseFormComponent implements OnInit {
       requestDescription: [null],
       issueTypeLookupID: [null, Validators.required],
       attachments: this.fb.array(
-        this.requestTypes.map(s =>
+        this.requestTypeAttachments.map(s =>
           this.fb.group({
             obj: [s],
             type: [s.lookupName],

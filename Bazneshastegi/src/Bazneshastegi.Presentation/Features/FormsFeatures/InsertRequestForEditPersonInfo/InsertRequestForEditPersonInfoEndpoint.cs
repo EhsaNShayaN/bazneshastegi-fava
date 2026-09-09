@@ -32,6 +32,7 @@ internal sealed class InsertRequestForEditPersonInfoApiRequestMapper :
         ValueTask.FromResult(
             PrimitiveResult.Success(
                 new InsertRequestForEditPersonInfoCommand(
+                    src.RequestTypeID,
                     src.TempPersonID,
                     src.RequestID,
                     src.LoginedPersonID,

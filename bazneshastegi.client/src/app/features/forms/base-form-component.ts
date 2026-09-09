@@ -63,7 +63,7 @@ export class BaseFormComponent extends BaseComponent implements OnDestroy {
   form!: FormGroup;
   personInfo: PersonInfo | null = null;
   requestTypeID: string = '';
-  requestTypes: RequestTypeAttachment[] = [];
+  requestTypeAttachments: RequestTypeAttachment[] = [];
 
   //requestTypeGuide?: GetRequestTypeGuide;
 
@@ -80,7 +80,7 @@ export class BaseFormComponent extends BaseComponent implements OnDestroy {
             this.personInfo = personInfo;
             this.restApiService.getRequestTypeAttachment(this.requestTypeID).subscribe((b: RequestTypeAttachmentResponse) => {
               if (b.isSuccess) {
-                this.requestTypes = b.data;
+                this.requestTypeAttachments = b.data;
                 this.createForm();
               }
             });

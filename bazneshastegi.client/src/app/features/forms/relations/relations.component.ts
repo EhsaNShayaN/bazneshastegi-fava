@@ -25,7 +25,7 @@ export class RelationsComponent extends BaseFormComponent {
       requestType: ['', Validators.required], // محصل یا دانشجو
       dependents: this.fb.array([]),
       attachments: this.fb.array(
-        this.requestTypes.map(s =>
+        this.requestTypeAttachments.map(s =>
           this.fb.group({
             obj: [s],
             type: [s.lookupName],

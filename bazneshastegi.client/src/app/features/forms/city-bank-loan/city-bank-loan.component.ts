@@ -60,7 +60,7 @@ export class CityBankLoanComponent extends BaseFormComponent implements OnInit {
           requestDescription: [''],
           needGuarantor: [false, Validators.required],
           attachments: this.fb.array(
-            this.requestTypes.map(s =>
+            this.requestTypeAttachments.map(s =>
               this.fb.group({
                 obj: [s],
                 type: [s.lookupName],

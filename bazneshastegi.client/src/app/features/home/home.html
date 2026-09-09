@@ -3,8 +3,15 @@
     <mat-label>انتخاب فرم</mat-label>
     <mat-select (selectionChange)="selectForm($event)">
       @for (item of requestTypes; track item.requestTypeID) {
-      <mat-option [value]="item">{{ item.name }}</mat-option>
+        <mat-option [value]="item">{{ item.name }}</mat-option>
       }
     </mat-select>
   </mat-form-field>
 </div>
+@if (message) {
+  <mat-card class="theme-container mt-2 mb-3">
+    <mat-card-content class="bg-orange background-color">
+      {{ message }}
+    </mat-card-content>
+  </mat-card>
+}

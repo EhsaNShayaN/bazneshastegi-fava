@@ -35,7 +35,7 @@ export class EducationRewardComponent extends BaseFormComponent implements OnIni
     this.form = this.fb.group({
       prizeReceiver: ['', Validators.required], // محصل یا دانشجو
       attachments: this.fb.array(
-        this.requestTypes.map(s =>
+        this.requestTypeAttachments.map(s =>
           this.fb.group({
             obj: [s],
             type: [s.lookupName],

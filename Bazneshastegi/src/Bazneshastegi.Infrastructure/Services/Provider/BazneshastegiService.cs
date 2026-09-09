@@ -650,7 +650,7 @@ public sealed class BazneshastegiService : IBazneshastegiService
         var x = JsonHelpers.Serialize(request);
         var endpoint = "api/tempPerson/InsertRequestForEditPersonInfo";
 
-        return await HttpProxyHelper.PostBazneshastegiRequest<ProviderInsertRequestForEditPersonInfoRequest, ProviderInsertRequestForEditPersonInfoResponse>(
+        var res = await HttpProxyHelper.PostBazneshastegiRequest<ProviderInsertRequestForEditPersonInfoRequest, ProviderInsertRequestForEditPersonInfoResponse>(
             () => ValueTask.FromResult(PrimitiveResult.Success(this._httpClientFactory.CreateClient(HttpClientName))),
             endpoint,
             request,
@@ -659,6 +659,17 @@ public sealed class BazneshastegiService : IBazneshastegiService
                 result => ValueTask.FromResult(PrimitiveResult.Success(result.ItemList.FirstOrDefault())),
                 result => ValueTask.FromResult(PrimitiveResult.Failure<ProviderInsertRequestForEditPersonInfoResponse>("", result.Error))
             );
+
+        var z = await this.SendRequestToNextStateRequest(
+               new ProviderSendRequestToNextStateRequest(
+                   request.RequestID,
+                   1,
+                   string.Empty,
+                   "InsertRequestForEditPersonInfo",
+                   //string.Empty,
+                   request.RequestTypeID),
+               cancellationToken);
+        return res;
     }
     public async ValueTask<PrimitiveResult<ProviderGetTempPersonResponse[]>> GetTempPerson(
         string? personID,

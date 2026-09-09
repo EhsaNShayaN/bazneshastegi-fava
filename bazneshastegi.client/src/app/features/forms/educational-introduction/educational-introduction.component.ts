@@ -39,7 +39,7 @@ export class EducationalIntroductionComponent extends BaseFormComponent implemen
       facilityGiverDesc: [null],
       profitOrDiscountPercent: [null, Validators.required],
       attachments: this.fb.array(
-        this.requestTypes.map(s =>
+        this.requestTypeAttachments.map(s =>
           this.fb.group({
             obj: [s],
             type: [s.lookupName],

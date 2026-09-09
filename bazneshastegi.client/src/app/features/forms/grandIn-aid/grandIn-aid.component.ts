@@ -33,7 +33,7 @@ export class GrandInAidComponent extends BaseFormComponent implements OnInit {
       hasWelfareCertificate: [null, Validators.required],
       illnessHistory: [null, Validators.required],
       attachments: this.fb.array(
-        this.requestTypes.map(s =>
+        this.requestTypeAttachments.map(s =>
           this.fb.group({
             obj: [s],
             type: [s.lookupName],

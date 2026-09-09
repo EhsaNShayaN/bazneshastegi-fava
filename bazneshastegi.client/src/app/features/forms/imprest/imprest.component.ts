@@ -31,7 +31,7 @@ export class ImprestComponent extends BaseFormComponent {
           facilityAmount: [this.requestTypeConfig?.defaultAmount, Validators.required],
           requestDescription: [''],
           attachments: this.fb.array(
-            this.requestTypes.map(s =>
+            this.requestTypeAttachments.map(s =>
               this.fb.group({
                 obj: [s],
                 type: [s.lookupName],

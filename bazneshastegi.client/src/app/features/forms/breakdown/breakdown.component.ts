@@ -24,7 +24,7 @@ export class BreakdownComponent extends BaseFormComponent implements OnInit {
       applicantRelationship: ['خودم', Validators.required],
       requestDescription: [null],
       attachments: this.fb.array(
-        this.requestTypes.map(s =>
+        this.requestTypeAttachments.map(s =>
           this.fb.group({
             obj: [s],
             type: [s.lookupName],

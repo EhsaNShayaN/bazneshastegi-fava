@@ -35,7 +35,7 @@ export class MarriageLoanComponent extends BaseFormComponent {
       facilityInstalementAmount: [{value: null, disabled: true}, Validators.required],
       requestDescription: [''],
       attachments: this.fb.array(
-        this.requestTypes.map(s =>
+        this.requestTypeAttachments.map(s =>
           this.fb.group({
             obj: [s],
             type: [s.lookupName],
