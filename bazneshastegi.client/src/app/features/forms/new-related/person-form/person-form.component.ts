@@ -141,11 +141,12 @@ export class PersonFormComponent extends BaseComponent implements OnInit, OnDest
           value.requestId = insertResponse.data.requestID;
           if (this.tempPersonID) {
             value.tempPersonID = this.tempPersonID;
+            value.requestTypeID = this.requestTypeID;
             this.restApiService.updateNewPerson(value).subscribe((a: BaseResult<NewRelatedRequest>) => {
               this.stopLoading();
               this.toaster.success(CustomConstants.THE_OPERATION_WAS_SUCCESSFUL)
                 .onHidden.subscribe(() => {
-                this.router.navigate([`/forms/none/${this.requestTypeID}`]);
+                this.redirect(insertResponse.data.requestNO);
               }, (err) => {
                 this.stopLoading();
               });
@@ -155,7 +156,7 @@ export class PersonFormComponent extends BaseComponent implements OnInit, OnDest
               this.stopLoading();
               this.toaster.success(CustomConstants.THE_OPERATION_WAS_SUCCESSFUL)
                 .onHidden.subscribe(() => {
-                this.router.navigate([`/forms/none/${this.requestTypeID}`]);
+                this.redirect(insertResponse.data.requestNO);
               }, (err) => {
                 this.stopLoading();
               });
@@ -261,6 +262,11 @@ export class PersonFormComponent extends BaseComponent implements OnInit, OnDest
 
       personDescription: [this.tempPerson?.personDescription],
     });
+  }
+
+  redirect(requestNO: string) {
+    sessionStorage.setItem('new-related', requestNO);
+    this.router.navigate(['/forms/none', this.requestTypeID]);
   }
 
   ngOnDestroy() {

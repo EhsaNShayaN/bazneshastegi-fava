@@ -1,5 +1,6 @@
 ﻿namespace Bazneshastegi.Contracts.FormsContract.InsertNewPersonContract;
 public readonly record struct InsertNewPersonApiRequest(
+    string RequestTypeID,
     string RequestID,
     string RelationshipID,
     string PersonFirstName,

@@ -1,6 +1,7 @@
 ﻿using Bazneshastegi.Application.Services.Provider;
 using Bazneshastegi.Domain.Utilities;
 using Bazneshastegi.Infrastructure.Helpers;
+using Microsoft.Extensions.Logging;
 
 namespace Bazneshastegi.Infrastructure.Services.Provider;
 
@@ -8,9 +9,12 @@ public sealed class BazneshastegiService : IBazneshastegiService
 {
     public const string HttpClientName = "Bazneshastegi";
     private readonly IHttpClientFactory _httpClientFactory;
-    public BazneshastegiService(IHttpClientFactory httpClientFactory)
+    private readonly ILogger<BazneshastegiService> _logger;
+
+    public BazneshastegiService(IHttpClientFactory httpClientFactory, ILogger<BazneshastegiService> logger)
     {
         this._httpClientFactory = httpClientFactory;
+        this._logger = logger;
     }
     public ValueTask<PrimitiveResult<ProviderLoginResponse>> Login(string username, string password, CancellationToken cancellationToken)
     {
@@ -590,7 +594,7 @@ public sealed class BazneshastegiService : IBazneshastegiService
         var x = JsonHelpers.Serialize(request);
         var endpoint = "api/tempPerson/InsertNewPerson";
 
-        return await HttpProxyHelper.PostBazneshastegiRequest<ProviderInsertNewPersonRequest, ProviderInsertNewPersonResponse>(
+        var res = await HttpProxyHelper.PostBazneshastegiRequest<ProviderInsertNewPersonRequest, ProviderInsertNewPersonResponse>(
             () => ValueTask.FromResult(PrimitiveResult.Success(this._httpClientFactory.CreateClient(HttpClientName))),
             endpoint,
             request,
@@ -599,6 +603,17 @@ public sealed class BazneshastegiService : IBazneshastegiService
                 result => ValueTask.FromResult(PrimitiveResult.Success(result.ItemList.FirstOrDefault())),
                 result => ValueTask.FromResult(PrimitiveResult.Failure<ProviderInsertNewPersonResponse>("", result.Error))
             );
+
+        var z = await this.SendRequestToNextStateRequest(
+               new ProviderSendRequestToNextStateRequest(
+                   request.RequestID,
+                   1,
+                   string.Empty,
+                   "InsertNewPerson",
+                   //string.Empty,
+                   request.RequestTypeID),
+               cancellationToken);
+        return res;
     }
     public async ValueTask<PrimitiveResult<ProviderUpdateNewPersonResponse>> UpdateNewPerson(
         ProviderUpdateNewPersonRequest request,
@@ -607,7 +622,7 @@ public sealed class BazneshastegiService : IBazneshastegiService
         var x = JsonHelpers.Serialize(request);
         var endpoint = "api/tempPerson/UpdateNewPerson";
 
-        return await HttpProxyHelper.PostBazneshastegiRequest<ProviderUpdateNewPersonRequest, ProviderUpdateNewPersonResponse>(
+        var res = await HttpProxyHelper.PostBazneshastegiRequest<ProviderUpdateNewPersonRequest, ProviderUpdateNewPersonResponse>(
             () => ValueTask.FromResult(PrimitiveResult.Success(this._httpClientFactory.CreateClient(HttpClientName))),
             endpoint,
             request,
@@ -616,6 +631,17 @@ public sealed class BazneshastegiService : IBazneshastegiService
                 result => ValueTask.FromResult(PrimitiveResult.Success(result.ItemList.FirstOrDefault())),
                 result => ValueTask.FromResult(PrimitiveResult.Failure<ProviderUpdateNewPersonResponse>("", result.Error))
             );
+
+        var z = await this.SendRequestToNextStateRequest(
+               new ProviderSendRequestToNextStateRequest(
+                   request.RequestID,
+                   1,
+                   string.Empty,
+                   "UpdateNewPerson",
+                   //string.Empty,
+                   request.RequestTypeID),
+               cancellationToken);
+        return res;
     }
     public async ValueTask<PrimitiveResult<ProviderInsertRequestForEditPersonInfoResponse>> InsertRequestForEditPersonInfo(
         ProviderInsertRequestForEditPersonInfoRequest request,

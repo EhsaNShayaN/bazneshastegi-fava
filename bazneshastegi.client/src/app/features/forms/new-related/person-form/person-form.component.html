@@ -270,7 +270,9 @@
         </mat-form-field>
       </div>
     </div>
-    <button mat-raised-button color="primary" (click)="submit()" submitLoading #btn="submitLoading">ذخیره</button>
 
+    <div fxLayout="row wrap" fxLayoutAlign="end center">
+      <button mat-raised-button color="primary" (click)="submit()" submitLoading #btn="submitLoading">ذخیره</button>
+    </div>
   </form>
 }

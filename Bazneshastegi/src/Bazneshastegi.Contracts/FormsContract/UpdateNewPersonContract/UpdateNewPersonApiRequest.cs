@@ -1,5 +1,6 @@
 ﻿namespace Bazneshastegi.Contracts.FormsContract.UpdateNewPersonContract;
 public readonly record struct UpdateNewPersonApiRequest(
+    string RequestTypeID,
     string TempPersonID,
     string RequestID,
     string RelationshipID,

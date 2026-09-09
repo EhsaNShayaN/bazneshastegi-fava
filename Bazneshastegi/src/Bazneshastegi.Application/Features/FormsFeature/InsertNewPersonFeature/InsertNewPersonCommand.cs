@@ -6,6 +6,7 @@ public sealed class InsertNewPersonCommand
     : IPrimitiveResultCommand<InsertNewPersonCommandResponse>,
       IValidatableRequest<InsertNewPersonCommand>
 {
+    public string RequestTypeID { get; set; } = string.Empty;
     public string TempPersonID { get; set; } = string.Empty;
     public string RequestID { get; set; } = string.Empty;
     public string RelationshipID { get; set; } = string.Empty;

@@ -366,9 +366,3 @@ export class RestApiService {
     return throwError('خطای نامشخص، لطفاً لحظاتی دیگر تلاش نمایید.');
   }
 }
-
-export interface CaptchaImageInfo {
-  id: string;
-  expiry: string;
-  image: string;
-}

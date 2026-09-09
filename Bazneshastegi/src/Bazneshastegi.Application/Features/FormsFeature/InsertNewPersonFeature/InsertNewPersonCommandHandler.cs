@@ -23,6 +23,7 @@ public sealed class InsertNewPersonCommandHandler : IPrimitiveResultCommandHandl
     {
         return await this._bazneshastegiService.InsertNewPerson(
             new ProviderInsertNewPersonRequest(
+                request.RequestTypeID,
                 request.TempPersonID,
                 request.RequestID,
                 _userContextAccessor.CurrentPersonId,

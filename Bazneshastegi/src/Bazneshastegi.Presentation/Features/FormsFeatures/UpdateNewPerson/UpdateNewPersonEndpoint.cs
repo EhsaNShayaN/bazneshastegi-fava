@@ -30,6 +30,7 @@ internal sealed class UpdateNewPersonApiRequestMapper : IPresentationMapper<Upda
             PrimitiveResult.Success(
                 new UpdateNewPersonCommand
                 {
+                    RequestTypeID = src.RequestTypeID,
                     TempPersonID = src.TempPersonID,
                     RequestID = src.RequestID,
                     RelationshipID = src.RelationshipID,

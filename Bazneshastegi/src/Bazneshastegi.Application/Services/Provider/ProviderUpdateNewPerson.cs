@@ -1,6 +1,7 @@
 ﻿namespace Bazneshastegi.Application.Services.Provider;
 
 public readonly record struct ProviderUpdateNewPersonRequest(
+    string RequestTypeID,
     string TempPersonID,
     string RequestID,
     string LoginedPersonID,

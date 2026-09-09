@@ -1,7 +1,8 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BaseFormComponent} from '../base-form-component';
 import {MatTableDataSource} from '@angular/material/table';
 import {TempPersonsResponse} from '../../../core/models/TempPersonsResponse';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-new-related',
@@ -9,7 +10,7 @@ import {TempPersonsResponse} from '../../../core/models/TempPersonsResponse';
   styleUrl: '../forms.scss',
   standalone: false
 })
-export class NewRelatedComponent extends BaseFormComponent {
+export class NewRelatedComponent extends BaseFormComponent implements OnInit {
   newRelationColumnsToDisplay = [
     //{key: 'pensionaryID', name: 'شناسه'},
     //{key: 'personFatherName', name: 'نام پدر'},
@@ -30,6 +31,15 @@ export class NewRelatedComponent extends BaseFormComponent {
     this.relationcurrentColumnsToDisplay = this.relationColumnsToDisplay.map(s => s.key);
     this.getRelations();
     this.getNewRelations();
+  }
+
+  ngOnInit(): void {
+    //const requestNo = this.route.snapshot.queryParamMap.get('r');
+    const requestNo = sessionStorage.getItem('new-related');
+    if (requestNo) {
+      this.showResult(requestNo);
+      sessionStorage.removeItem('new-related');
+    }
   }
 
   getNewRelations() {

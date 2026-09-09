@@ -30,6 +30,7 @@ internal sealed class InsertNewPersonApiRequestMapper : IPresentationMapper<Inse
             PrimitiveResult.Success(
                 new InsertNewPersonCommand
                 {
+                    RequestTypeID = src.RequestTypeID,
                     RequestID = src.RequestID,
                     TempPersonID = string.Empty,
                     RelationshipID = src.RelationshipID,

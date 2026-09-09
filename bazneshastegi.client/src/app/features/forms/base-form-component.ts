@@ -210,9 +210,9 @@ export class BaseFormComponent extends BaseComponent implements OnDestroy {
     this.message = `متقاضی گرامی درخواست شما با شماره پیگیری ${requestNO} در سامانه ثبت گردید. جهت مشاهده مراحل بررسی درخواست از طریق منوی پیگیری درخواست اقدام فرمایید.`;
     this.restApiService.formSubmittedSubject.next(this.message);
     this.toaster.success(CustomConstants.THE_OPERATION_WAS_SUCCESSFUL, '', {});
-    this.form.reset();
-    this.form.markAsPristine();
-    this.form.markAsUntouched();
+    this.form?.reset();
+    this.form?.markAsPristine();
+    this.form?.markAsUntouched();
     window.scrollTo({top: 0, behavior: 'smooth'});
     this.customFunction();
     this.stopLoading();
@@ -296,11 +296,11 @@ export class BaseFormComponent extends BaseComponent implements OnDestroy {
   }
 
   startLoading() {
-    this.btn.startLoading();
+    this.btn?.startLoading();
   }
 
   stopLoading() {
-    this.btn.stopLoading();
+    this.btn?.stopLoading();
   }
 
   ngOnDestroy() {

@@ -23,6 +23,7 @@ public sealed class UpdateNewPersonCommandHandler : IPrimitiveResultCommandHandl
     {
         return await this._bazneshastegiService.UpdateNewPerson(
             new ProviderUpdateNewPersonRequest(
+                request.RequestTypeID,
                 request.TempPersonID,
                 request.RequestID,
                 _userContextAccessor.CurrentPersonId,
