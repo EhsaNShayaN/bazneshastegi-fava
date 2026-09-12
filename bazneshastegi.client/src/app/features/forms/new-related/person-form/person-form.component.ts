@@ -9,7 +9,6 @@ import {MatSelectChange} from '@angular/material/select';
 import {BaseResult} from '../../../../core/models/BaseResult';
 import {NewRelatedRequest} from '../new-related.model';
 import {ToastrService} from 'ngx-toastr';
-import {CustomConstants} from '../../../../core/constants/custom.constants';
 import {ActivatedRoute, Router} from '@angular/router';
 import {InsertRequest} from '../../pay-fraction-certificate/pay-fraction-certificate.model';
 import {PersonInfo} from '../../../../core/models/PersonInfoResponse';
@@ -139,27 +138,20 @@ export class PersonFormComponent extends BaseComponent implements OnInit, OnDest
         if (insertResponse) {
           const value = this.form.value;
           value.requestId = insertResponse.data.requestID;
+          const requestNo = insertResponse.data.requestNO;
           if (this.tempPersonID) {
             value.tempPersonID = this.tempPersonID;
             value.requestTypeID = this.requestTypeID;
             this.restApiService.updateNewPerson(value).subscribe((a: BaseResult<NewRelatedRequest>) => {
+              this.redirect(requestNo);
+            }, (err) => {
               this.stopLoading();
-              this.toaster.success(CustomConstants.THE_OPERATION_WAS_SUCCESSFUL)
-                .onHidden.subscribe(() => {
-                this.redirect(insertResponse.data.requestNO);
-              }, (err) => {
-                this.stopLoading();
-              });
             });
           } else {
             this.restApiService.insertNewPerson(value).subscribe((a: BaseResult<NewRelatedRequest>) => {
+              this.redirect(requestNo);
+            }, (err) => {
               this.stopLoading();
-              this.toaster.success(CustomConstants.THE_OPERATION_WAS_SUCCESSFUL)
-                .onHidden.subscribe(() => {
-                this.redirect(insertResponse.data.requestNO);
-              }, (err) => {
-                this.stopLoading();
-              });
             });
           }
         } else {
@@ -265,8 +257,10 @@ export class PersonFormComponent extends BaseComponent implements OnInit, OnDest
   }
 
   redirect(requestNO: string) {
+    this.stopLoading();
     sessionStorage.setItem('new-related', requestNO);
     this.router.navigate(['/forms/none', this.requestTypeID]);
+    //window.location.href = `/forms/none/${this.requestTypeID}`;
   }
 
   ngOnDestroy() {

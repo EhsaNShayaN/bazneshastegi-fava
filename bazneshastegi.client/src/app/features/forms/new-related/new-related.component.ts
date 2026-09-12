@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {BaseFormComponent} from '../base-form-component';
 import {MatTableDataSource} from '@angular/material/table';
 import {TempPersonsResponse} from '../../../core/models/TempPersonsResponse';
-import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-new-related',
@@ -12,9 +11,6 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class NewRelatedComponent extends BaseFormComponent implements OnInit {
   newRelationColumnsToDisplay = [
-    //{key: 'pensionaryID', name: 'شناسه'},
-    //{key: 'personFatherName', name: 'نام پدر'},
-    //{key: 'personLastName', name: 'نام خانوادگی'},
     {key: 'personFirstName', name: 'نام'},
     {key: 'personLastName', name: 'نام خانوادگی'},
     {key: 'relationshipName', name: 'نسبت'},
@@ -34,18 +30,16 @@ export class NewRelatedComponent extends BaseFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //const requestNo = this.route.snapshot.queryParamMap.get('r');
-    const requestNo = sessionStorage.getItem('new-related');
-    if (requestNo) {
-      this.showResult(requestNo);
-      sessionStorage.removeItem('new-related');
-    }
+    setTimeout(() => {
+      const requestNo = sessionStorage.getItem('new-related');
+      if (requestNo) {
+        this.showResult(requestNo);
+        sessionStorage.removeItem('new-related');
+      }
+    }, 100);
   }
 
   getNewRelations() {
-    /*this.restApiService.getNewPersonByParentId().subscribe((res: RelatedPersonsResponse) => {
-      this.newRelationDataSource = new MatTableDataSource<any>(res.data);
-    });*/
     this.restApiService.getTempPerson().subscribe((res: TempPersonsResponse) => {
       this.newRelationDataSource = new MatTableDataSource<any>(res.data);
     });

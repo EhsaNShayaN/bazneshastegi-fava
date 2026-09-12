@@ -63,6 +63,7 @@ export class Forms extends PureComponent implements OnInit, OnDestroy {
   }
 
   componentAdded(cmp: BaseFormComponent) {
+    this.restApiService.formSubmittedSubject.next('');
     this.restApiService.getRequestTypeGuide(this.selectedRequestTypeId).subscribe((g: GetRequestTypeGuideResponse) => {
       this.requestTypeGuide = null;
       if (g.data.length > 0) {

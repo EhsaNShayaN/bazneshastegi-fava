@@ -65,8 +65,6 @@ export class BaseFormComponent extends BaseComponent implements OnDestroy {
   requestTypeID: string = '';
   requestTypeAttachments: RequestTypeAttachment[] = [];
 
-  //requestTypeGuide?: GetRequestTypeGuide;
-
   constructor() {
     super();
     this.sub = this.activatedRoute.params.subscribe(({id}) => {
